@@ -34,7 +34,7 @@ model User {
   ticketServicesAdded TicketService[] @relation("UserAddedServices")
 
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
   @@map("users")
 }
 
@@ -47,7 +47,7 @@ model Service {
   tickets TicketService[]
 
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
   @@map("services")
 }
 
@@ -57,7 +57,7 @@ model Ticket {
   description String
   status TicketStatus @default(open)
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   clientId String
   client User @relation("ClientTickets", fields: [clientId], references: [id], onDelete: Cascade)
