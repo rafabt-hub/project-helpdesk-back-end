@@ -9,7 +9,7 @@ const ticketsRoutes = Router()
 const ticketsController = new TicketsController()
 
 ticketsRoutes.use(ensureAuthenticated)
-ticketsRoutes.post("/", verifyUserAuthorization(["client"]), ticketsController.create)
+ticketsRoutes.post("/", verifyUserAuthorization(["client","admin"]), ticketsController.create)
 ticketsRoutes.get("/", verifyUserAuthorization(["admin", "technician", "client"]), ticketsController.index)
 ticketsRoutes.get("/:id", verifyUserAuthorization(["admin", "technician", "client"]), ticketsController.show)
 ticketsRoutes.patch("/:id/status", verifyUserAuthorization(["admin", "technician"]), 
