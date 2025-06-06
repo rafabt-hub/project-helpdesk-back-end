@@ -8,7 +8,12 @@ import { verifyUserAuthorization } from "@/middlewares/verifyUserAuthorization"
 const ticketsRoutes = Router()
 const ticketsController = new TicketsController()
 
-ticketsRoutes.use(ensureAuthenticated, verifyUserAuthorization(["admin", "client"]))
-ticketsRoutes.post("/", ticketsController.create)
+ticketsRoutes.use(ensureAuthenticated)
+ticketsRoutes.post("/", verifyUserAuthorization(["client"]), ticketsController.create)
+ticketsRoutes.get("/", verifyUserAuthorization(["admin", "technician", "client"]), ticketsController.index)
+ticketsRoutes.get("/:id", verifyUserAuthorization(["admin", "technician", "client"]), ticketsController.show)
+ticketsRoutes.patch("/:id/status", verifyUserAuthorization(["admin", "technician"]), 
+ticketsController.updateStatus)
+ticketsRoutes.delete("/:id", verifyUserAuthorization(["admin", "client"]), ticketsController.delete)
 
 export { ticketsRoutes }
