@@ -77,4 +77,5 @@ model TicketService {
   ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   service Service @relation(fields: [serviceId], references: [id])
   addedBy User @relation("UserAddedServices", fields: [addedById], references: [id])
+  @@map("ticket_service")
 }
