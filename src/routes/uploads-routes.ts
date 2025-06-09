@@ -1,16 +1,20 @@
 import { Router } from "express"
-import { UploadsController } from "@/controllers/uploads-controller"
+import multer from "multer"
+import uploadConfig from "@/configs/uploads"
+
 import { ensureAuthenticated } from "@/middlewares/ensure-authenticated"
-import { multerUpload } from "@/providers/disk-storage"
+import { UploadsController } from "@/controllers/uploads-controller" // ← nomeado!
 
 const uploadsRoutes = Router()
 const uploadsController = new UploadsController()
 
+const upload = multer(uploadConfig.MULTER)
+
 uploadsRoutes.patch(
-  "/profile-image",
+  "/",
   ensureAuthenticated,
-  multerUpload.single("profileImage"),
-  uploadsController.uploadProfileImage
+  upload.single("profileImage"),
+  uploadsController.update
 )
 
 export { uploadsRoutes }
