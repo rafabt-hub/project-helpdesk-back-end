@@ -9,9 +9,10 @@ class TicketsController {
     const bodySchema = z.object({
       description: z.string(),
       services: z.array(z.string().uuid()).nonempty("Select at least one service."),
+      technicianId: z.string().uuid().optional(),
     })
 
-    const { description, services } = bodySchema.parse(request.body)
+    const { description, services, technicianId } = bodySchema.parse(request.body)
     const user = request.user!
 
     if (user.role !== "client") {
