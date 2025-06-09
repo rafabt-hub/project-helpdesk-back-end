@@ -1,5 +1,6 @@
 import express from "express"
 import "express-async-errors"
+import * as path from "path"
 
 import { routes } from "./routes"
 import { errorHandling } from "./middlewares/error-handling"
@@ -8,6 +9,7 @@ const app = express()
 
 app.use(express.json())
 app.use(routes)
+app.use("/uploads", express.static(path.resolve(__dirname, "..", "tmp", "uploads")))
 
 app.use(errorHandling)
 
