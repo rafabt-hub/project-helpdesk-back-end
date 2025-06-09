@@ -10,7 +10,7 @@ const uploadsController = new UploadsController()
 
 const upload = multer(uploadConfig.MULTER)
 
-uploadsRoutes.patch(
+uploadsRoutes.post(
   "/",
   ensureAuthenticated,
   upload.single("profileImage"),
