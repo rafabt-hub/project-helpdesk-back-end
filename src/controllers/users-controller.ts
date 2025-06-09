@@ -34,6 +34,29 @@ class UsersController {
 
     return response.status(201).json(userWithoutPassword)
   }
+
+  async list(request: Request, response: Response) {
+  type Role = "admin" | "technician" | "client"
+  const validRoles: Role[] = ["admin", "technician", "client"]
+
+  const roleParam = request.query.role as string | undefined
+
+  const filter = roleParam && validRoles.includes(roleParam as Role)
+    ? { role: roleParam as Role }
+    : {}
+
+  const users = await prisma.user.findMany({
+    where: filter,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+    },
+  })
+
+  return response.json(users)
+ }
 }
 
 export { UsersController }
